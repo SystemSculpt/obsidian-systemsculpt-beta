@@ -1,0 +1,4496 @@
+.systemsculpt-action-container {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: var(--background-primary);
+  border-top: 1px solid var(--background-modifier-border);
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+0% {
+  opacity: 0.3;
+  transform: scale(0.8);
+}
+100% {
+  opacity: 0.3;
+  transform: scale(0.8);
+}
+50% {
+  opacity: 1;
+  transform: scale(1.2);
+}
+from {
+  opacity: 0;
+  transform: rotate(0deg);
+}
+to {
+  opacity: 1;
+  transform: rotate(360deg);
+}
+
+@keyframes token-loading {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.systemsculpt-button-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.25rem;
+}
+
+.systemsculpt-chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--background-primary);
+  position: relative;
+}
+.systemsculpt-chat-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.systemsculpt-chat-header-bottom {
+  grid-column: 1 / -1;
+}
+.systemsculpt-chat-header-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+.systemsculpt-chat-input {
+  flex-grow: 1;
+  resize: none;
+  min-height: 40px;
+  max-height: 150px;
+  padding: 0.5rem;
+  margin-right: 0.25rem;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+.systemsculpt-chat-input:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  background-color: var(--background-primary);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+/* Preview popups */
+.systemsculpt-preview {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translate(8px, 8px);
+  transition: opacity 0.2s ease;
+  background-color: var(--background-primary);
+}
+
+.systemsculpt-preview.visible {
+  opacity: 1;
+}
+
+/* Image preview specifics */
+.systemsculpt-image-preview {
+  object-fit: contain;
+}
+
+/* Markdown preview specifics */
+.systemsculpt-markdown-preview {
+  padding: 12px 16px;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-size: 0.9em;
+  line-height: 1.5;
+  border: 1px solid var(--background-modifier-border);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Custom scrollbar for markdown preview */
+.systemsculpt-markdown-preview::-webkit-scrollbar {
+  width: 6px;
+}
+
+.systemsculpt-markdown-preview::-webkit-scrollbar-track {
+  background: var(--background-primary);
+  border-radius: 3px;
+}
+
+.systemsculpt-markdown-preview::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border-hover);
+  border-radius: 3px;
+}
+
+.systemsculpt-markdown-preview::-webkit-scrollbar-thumb:hover {
+  background: var(--interactive-accent);
+}
+
+.systemsculpt-markdown-preview h1:first-child {
+  margin-top: 0;
+}
+
+.systemsculpt-markdown-preview :last-child {
+  margin-bottom: 0;
+}
+
+/* Preview header */
+.systemsculpt-preview-header {
+  padding: 8px 12px;
+  background-color: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  border-radius: 4px 4px 0 0;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+/* Only show previews on desktop */
+@media (hover: none) {
+  .systemsculpt-preview {
+    display: none;
+  }
+}
+
+/* Reasoning Container Styles */
+.systemsculpt-reasoning-container {
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-reasoning-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.systemsculpt-reasoning-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.systemsculpt-reasoning-header:hover {
+  color: var(--text-normal);
+}
+
+.systemsculpt-reasoning-header .lucide {
+  width: 14px;
+  height: 14px;
+}
+
+.systemsculpt-reasoning-content {
+  font-size: 0.9em;
+  line-height: 1.4;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  max-height: 1000px;
+  overflow: hidden;
+  transition: max-height 0.2s ease;
+}
+
+.systemsculpt-reasoning-container.collapsed .systemsculpt-reasoning-content {
+  max-height: 0;
+}
+
+.systemsculpt-code-block-wrapper {
+  position: relative;
+  margin: 1em 0;
+  background-color: var(--background-primary);
+  border-radius: 8px;
+}
+
+.systemsculpt-context-add-button {
+  background: none;
+  border: none;
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.systemsculpt-context-add-button:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+.systemsculpt-context-card {
+  position: relative;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--background-primary);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+.systemsculpt-context-card.is-added {
+  background: var(--background-primary-alt);
+  border-color: var(--interactive-accent);
+}
+.systemsculpt-context-card.is-added .systemsculpt-context-check {
+  opacity: 1;
+  transform: scale(1);
+}
+.systemsculpt-context-card.is-selected {
+  border-color: var(--interactive-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  outline: 2px solid var(--interactive-accent);
+  outline-offset: 2px;
+}
+.systemsculpt-context-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--interactive-accent);
+  border-radius: 50%;
+  color: var(--text-on-accent);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+.systemsculpt-context-check svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
+}
+.systemsculpt-context-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+}
+.systemsculpt-context-empty svg {
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+}
+.systemsculpt-context-grid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+  overflow-y: auto;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  min-height: 0;
+}
+.systemsculpt-context-grid::-webkit-scrollbar {
+  width: 8px;
+}
+.systemsculpt-context-grid::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border-radius: 4px;
+}
+.systemsculpt-context-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-bg-hover);
+}
+.systemsculpt-context-grid::-webkit-scrollbar-track {
+  background: var(--background-primary);
+  border-radius: 4px;
+}
+.systemsculpt-context-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  color: var(--text-muted);
+}
+.systemsculpt-context-loading svg {
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+.systemsculpt-context-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  min-width: 0;
+}
+.systemsculpt-context-modal {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 16px;
+  background: var(--background-primary);
+  overflow: hidden;
+}
+.systemsculpt-context-path {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  width: 100%;
+}
+.systemsculpt-context-search {
+  flex-shrink: 0;
+  position: relative;
+  width: 100%;
+  margin-bottom: 8px;
+}
+.systemsculpt-context-search input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+.systemsculpt-context-search input:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+.systemsculpt-context-size {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+.systemsculpt-context-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-normal);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.systemsculpt-context-type {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 6px;
+  background: var(--background-modifier-border);
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.systemsculpt-action-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.systemsculpt-context-action-button {
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  margin-top: 16px;
+}
+.systemsculpt-context-action-button:hover {
+  background-color: var(--interactive-accent-hover);
+}
+.systemsculpt-context-action-button:active {
+  background-color: var(--interactive-accent-hover);
+  transform: translateY(1px);
+}
+.systemsculpt-context-action-button.is-active {
+  background-color: var(--interactive-accent);
+}
+.systemsculpt-context-action-button.is-active:hover {
+  background-color: var(--interactive-accent-hover);
+}
+.systemsculpt-context-token-count {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 6px;
+  background: var(--background-modifier-border);
+  border-radius: 4px;
+  margin-left: 4px;
+}
+.systemsculpt-context-meta-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  height: 24px;
+}
+
+.systemsculpt-context-type,
+.systemsculpt-context-size,
+.systemsculpt-context-token-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 0 6px;
+  border-radius: 4px;
+}
+
+.systemsculpt-context-type {
+  background: var(--background-modifier-border);
+  text-transform: uppercase;
+}
+
+.systemsculpt-context-size {
+  padding: 0;
+}
+
+.systemsculpt-context-token-count {
+  background: var(--background-modifier-border);
+}
+
+.systemsculpt-card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+
+.systemsculpt-card-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.systemsculpt-context-thumbnail {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 4px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.systemsculpt-context-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.systemsculpt-credit-balance {
+  font-size: 0.9em;
+  color: var(--text-muted);
+  margin: 4px 0;
+  padding: 4px 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+.systemsculpt-credit-balance.loading {
+  position: relative;
+  color: transparent;
+}
+.systemsculpt-credit-balance.loading::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--text-muted);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: token-loading 0.6s linear infinite;
+}
+.systemsculpt-credit-balance.error {
+  color: var(--text-error);
+  background: var(--background-modifier-error);
+}
+
+/* Custom Provider Modal Styles */
+.systemsculpt-custom-provider-modal {
+  height: fit-content;
+  width: min(95vw, 480px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: visible;
+  margin: 0 auto;
+  max-height: 90vh;
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-header h2 {
+  margin: 0;
+  font-size: 1.3em;
+  color: var(--text-normal);
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-back:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: visible;
+  padding: 0;
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  label {
+  color: var(--text-normal);
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  input,
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  select {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.9em;
+  width: 100%;
+  height: 32px;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  select {
+  padding-right: 24px;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 16px;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  input:focus,
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  select:focus {
+  border-color: var(--interactive-accent);
+  outline: none;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  input::placeholder {
+  color: var(--text-muted);
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-button {
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  height: 32px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button-primary {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button-primary:hover {
+  background-color: var(--interactive-accent-hover);
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button-secondary {
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button-secondary:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-form-group
+  input.systemsculpt-custom-provider-input-error {
+  border-color: var(--text-error);
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-error {
+  color: var(--text-error);
+  font-size: 0.8em;
+  margin-top: -2px;
+  min-height: 1em;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-error.systemsculpt-custom-provider-success {
+  color: var(--text-success, var(--interactive-success));
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-error-hidden {
+  opacity: 0;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .systemsculpt-custom-provider-modal {
+    height: fit-content;
+    max-height: 100vh;
+    width: 100vw;
+    padding: 16px;
+  }
+}
+
+/* Custom Provider Manager Modal Styles */
+.systemsculpt-custom-provider-manager-modal {
+  height: min(75vh, 600px);
+  width: min(95vw, 480px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-header
+  h2 {
+  margin: 0;
+  font-size: 1.3em;
+  color: var(--text-normal);
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-back:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-empty {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-muted);
+  padding: 32px 16px;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-empty-icon {
+  font-size: 2em;
+  opacity: 0.5;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-empty-text {
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-button {
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  height: 32px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-button-primary {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-custom-provider-manager-modal
+  .systemsculpt-custom-provider-manager-button-primary:hover {
+  background-color: var(--interactive-accent-hover);
+}
+
+@media (max-width: 768px) {
+  .systemsculpt-custom-provider-manager-modal {
+    height: 100vh;
+    width: 100vw;
+    padding: 16px;
+  }
+}
+
+.systemsculpt-custom-provider-modal .systemsculpt-custom-provider-presets {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-presets
+  label {
+  color: var(--text-normal);
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-preset-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button-secondary {
+  font-size: 0.85em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  height: 28px;
+}
+
+.systemsculpt-custom-provider-modal
+  .systemsculpt-custom-provider-button-secondary:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Provider List Styles */
+.systemsculpt-custom-provider-manager-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px;
+}
+
+.systemsculpt-custom-provider-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-custom-provider-card:hover {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.systemsculpt-custom-provider-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.systemsculpt-custom-provider-card-name {
+  font-weight: 500;
+  color: var(--text-normal);
+  font-size: 1em;
+  margin: 0;
+}
+
+.systemsculpt-custom-provider-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.systemsculpt-custom-provider-card-action {
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: none;
+  border: none;
+}
+
+.systemsculpt-custom-provider-card-action:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+}
+
+.systemsculpt-custom-provider-card-action.delete:hover {
+  color: var(--text-error);
+}
+
+.systemsculpt-custom-provider-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.systemsculpt-custom-provider-card-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.systemsculpt-custom-provider-card-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--background-modifier-success);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-custom-provider-card-status.disabled {
+  background-color: var(--background-modifier-error);
+}
+
+/* Empty State Styles */
+.systemsculpt-custom-provider-manager-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+  color: var(--text-muted);
+  height: 100%;
+}
+
+.systemsculpt-custom-provider-manager-empty-icon {
+  font-size: 2em;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.systemsculpt-custom-provider-manager-empty-text {
+  font-size: 0.9em;
+}
+
+.systemsculpt-custom-provider-card-status {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--background-modifier-success);
+}
+
+.systemsculpt-custom-provider-card-status.disabled {
+  background-color: var(--background-modifier-error);
+}
+
+.systemsculpt-custom-provider-card-status:hover {
+  opacity: 0.8;
+}
+
+.systemsculpt-custom-provider-card-status.testing {
+  opacity: 0.7;
+  cursor: wait;
+  background-color: var(--background-modifier-border);
+}
+
+.systemsculpt-custom-provider-card-status.testing svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.systemsculpt-custom-provider-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.systemsculpt-custom-provider-toggle-label {
+  color: var(--text-muted);
+}
+
+/* Toggle switch styling */
+.checkbox-container {
+  --toggle-width: 40px;
+  --toggle-height: 20px;
+  --toggle-thumb-size: 16px;
+
+  position: relative;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  cursor: pointer;
+}
+
+.checkbox-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background-modifier-border);
+  border-radius: 34px;
+  transition: background-color 0.15s ease;
+}
+
+.checkbox-toggle:before {
+  position: absolute;
+  content: "";
+  height: var(--toggle-thumb-size);
+  width: var(--toggle-thumb-size);
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.15s ease;
+}
+
+.checkbox-container.is-enabled .checkbox-toggle {
+  background-color: var(--interactive-accent);
+}
+
+.checkbox-container.is-enabled .checkbox-toggle:before {
+  transform: translateX(20px);
+}
+
+/* Testing state */
+.checkbox-container.testing .checkbox-toggle {
+  background-color: var(--background-modifier-border);
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.checkbox-container.testing .checkbox-toggle:before {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(2px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+.systemsculpt-drawer {
+  position: relative;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  overflow: visible;
+}
+.systemsculpt-drawer-category {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 8px 4px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+.systemsculpt-drawer-category:first-child {
+  margin-top: 0;
+}
+.systemsculpt-drawer-content {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  max-height: min(calc(100vh - 300px), 600px);
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.systemsculpt-drawer-content::before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  left: 0;
+  right: 0;
+  height: 25px;
+  pointer-events: none;
+}
+.systemsculpt-drawer-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--background-modifier-border);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+.systemsculpt-drawer-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 12px;
+  font-style: italic;
+}
+.systemsculpt-drawer-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+  z-index: 1;
+}
+.systemsculpt-drawer-header:hover {
+  background-color: var(--background-modifier-hover);
+}
+.systemsculpt-drawer-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-normal);
+  transition: background-color 0.15s ease;
+  font-size: 13px;
+  gap: 8px;
+  background: var(--background-primary);
+  margin-bottom: 5px;
+  min-height: 32px;
+}
+.systemsculpt-drawer-item-danger {
+  color: var(--text-error);
+}
+.systemsculpt-drawer-item-danger:hover {
+  background-color: var(--text-error);
+  color: var(--text-on-accent);
+}
+.systemsculpt-drawer-item-path {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.systemsculpt-drawer-item-path a {
+  color: var(--text-normal);
+  text-decoration: none;
+}
+.systemsculpt-drawer-item-path a:hover {
+  color: var(--text-accent);
+  text-decoration: underline;
+}
+.systemsculpt-drawer-item-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+.systemsculpt-drawer-item:hover .systemsculpt-drawer-item-remove {
+  // opacity: 1;  <-- Remove this line
+}
+.systemsculpt-drawer-item-remove:hover {
+  color: var(--text-error);
+  background: var(--background-modifier-error);
+}
+.systemsculpt-drawer-item:hover {
+  background-color: var(--background-modifier-hover);
+}
+.systemsculpt-drawer-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.systemsculpt-drawer-toggle {
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+}
+.systemsculpt-drawer::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -40px;
+  pointer-events: none;
+}
+
+.systemsculpt-sync-status {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.systemsculpt-sync-status svg {
+  width: 16px;
+  height: 16px;
+}
+
+.systemsculpt-sync-status.synced svg {
+  color: var(--color-green);
+}
+
+.systemsculpt-sync-status.syncing svg {
+  color: var(--text-muted);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.systemsculpt-empty-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.systemsculpt-error-message {
+  color: var(--text-error);
+  text-align: center;
+  padding: 1rem;
+  font-size: 14px;
+}
+
+.systemsculpt-extension-button {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--background-modifier-border);
+}
+.systemsculpt-extension-button.is-selected {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
+.systemsculpt-extension-button.is-selected:hover {
+  background: var(--interactive-accent-hover);
+}
+.systemsculpt-extension-button:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  transform: translateY(-1px);
+}
+.systemsculpt-extension-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.systemsculpt-progress-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background-primary);
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.systemsculpt-progress-modal-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-normal);
+}
+
+.systemsculpt-progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--background-modifier-border);
+  border-radius: 4px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.systemsculpt-progress-bar {
+  height: 100%;
+  background: var(--interactive-accent);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.systemsculpt-progress-status {
+  font-size: 0.9em;
+  color: var(--text-muted);
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.systemsculpt-progress-status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systemsculpt-progress-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.systemsculpt-progress-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+  background: var(--interactive-normal);
+  color: var(--text-normal);
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.systemsculpt-progress-button:hover {
+  background: var(--interactive-hover);
+}
+
+.systemsculpt-progress-button-primary {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-progress-button-primary:hover {
+  background: var(--interactive-accent-hover);
+}
+
+.systemsculpt-progress-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+@keyframes systemsculpt-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.systemsculpt-progress-spinner {
+  animation: systemsculpt-spin 2s linear infinite;
+}
+
+.systemsculpt-file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.systemsculpt-file-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.systemsculpt-status-bar {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: all 0.2s ease;
+  max-width: 300px;
+}
+
+.systemsculpt-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.systemsculpt-status-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.systemsculpt-status-text {
+  font-size: 14px;
+  color: var(--text-normal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Processing status in context panel */
+.systemsculpt-processing-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--background-primary);
+  border-top: 1px solid var(--background-modifier-border);
+  padding: 8px;
+  z-index: 100;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-file-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  background: var(--background-secondary);
+  animation: slideIn 0.2s ease;
+}
+
+.systemsculpt-file-status:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Spinning animation for loader icon */
+.systemsculpt-status-icon svg.lucide-loader-2 {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Status colors */
+.systemsculpt-status-bar[data-status="error"] {
+  border-color: var(--text-error);
+}
+
+.systemsculpt-status-bar[data-status="success"] {
+  border-color: var(--text-success);
+}
+
+.systemsculpt-status-bar[data-status="processing"] {
+  border-color: var(--text-accent);
+}
+
+/* Status icon colors */
+.systemsculpt-file-status .systemsculpt-status-icon svg {
+  color: var(--text-muted);
+}
+
+.systemsculpt-file-status[data-status="error"] .systemsculpt-status-icon svg {
+  color: var(--text-error);
+}
+
+.systemsculpt-file-status[data-status="success"] .systemsculpt-status-icon svg {
+  color: var(--text-success);
+}
+
+.systemsculpt-file-status[data-status="processing"]
+  .systemsculpt-status-icon
+  svg {
+  color: var(--text-accent);
+}
+
+/* Dark theme adjustments */
+.theme-dark .systemsculpt-status-bar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .systemsculpt-processing-status {
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-dark .systemsculpt-file-status {
+  background: var(--background-secondary-alt);
+}
+
+.systemsculpt-highlight {
+  color: var(--text-accent);
+  font-weight: 500;
+}
+
+.systemsculpt-image-wrapper {
+  margin: 8px 0;
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.systemsculpt-input-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--background-primary);
+  border-top: 1px solid var(--background-modifier-border);
+  position: relative;
+}
+
+.systemsculpt-button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(40px, 1fr));
+  grid-template-rows: repeat(2, minmax(40px, 1fr));
+  gap: 4px;
+  height: fit-content;
+}
+
+.systemsculpt-input-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary-alt);
+  color: var(--text-normal);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 40px;
+  height: 40px;
+}
+
+.systemsculpt-input-action-button:hover {
+  background-color: var(--background-modifier-hover);
+  transform: translateY(-1px);
+}
+
+.systemsculpt-input-action-button:active {
+  transform: translateY(0);
+}
+
+.systemsculpt-input-action-button.disabled {
+  background-color: var(--background-modifier-form-field);
+  border-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.systemsculpt-input-action-button.disabled:hover {
+  background-color: var(--background-modifier-form-field);
+  transform: none;
+}
+
+.systemsculpt-input-action-button.active:not(.disabled),
+.systemsculpt-input-action-button.is-enabled:not(.disabled) {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-chat-input {
+  flex-grow: 1;
+  resize: none;
+  min-height: 40px;
+  max-height: 150px;
+  padding: 10px 16px;
+  margin: 0;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  font-size: 15px;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-chat-input:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.systemsculpt-chat-input.disabled {
+  background-color: var(--background-modifier-form-field);
+  border-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.systemsculpt-send-button {
+  background-color: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-send-button:hover {
+  background-color: var(--interactive-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.systemsculpt-send-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.systemsculpt-send-button.disabled {
+  background-color: var(--background-modifier-border);
+  border-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.systemsculpt-send-button.disabled:hover {
+  background-color: var(--background-modifier-border);
+  transform: none;
+  box-shadow: none;
+}
+
+.systemsculpt-recorder-visualizer {
+  width: 100%;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 4px;
+  transition: all 0.3s ease;
+}
+
+.systemsculpt-recorder-visualizer .systemsculpt-recorder-live {
+  font-size: 12px;
+  color: var(--text-accent);
+  margin-bottom: 4px;
+  font-weight: 500;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  width: fit-content;
+  animation: pulse 2s infinite;
+}
+
+.systemsculpt-recorder-visualizer .systemsculpt-recorder-canvas {
+  width: 100%;
+  height: 60px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+  .systemsculpt-recorder-visualizer .systemsculpt-recorder-canvas {
+    height: 50px;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.systemsculpt-input-action-button.active {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-stop-button {
+  background-color: var(--text-error);
+  border-color: var(--text-error);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-stop-button:hover {
+  background-color: var(--text-error-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.systemsculpt-stop-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.systemsculpt-stop-button.disabled {
+  background-color: var(--background-modifier-border);
+  border-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.systemsculpt-stop-button.disabled:hover {
+  background-color: var(--background-modifier-border);
+  transform: none;
+  box-shadow: none;
+}
+
+.systemsculpt-token-counter {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 4px 10px;
+  opacity: 0.8;
+  z-index: 10;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.systemsculpt-token-counter.warning {
+  color: var(--text-error);
+  font-weight: 500;
+  background-color: var(--background-modifier-error);
+  opacity: 1;
+}
+
+/* Drag and drop styles */
+.systemsculpt-chat-container {
+  position: relative;
+}
+
+.systemsculpt-drag-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--background-primary-rgb), 0.9);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.systemsculpt-chat-container.systemsculpt-drag-active
+  .systemsculpt-drag-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systemsculpt-drag-message {
+  background: var(--background-secondary);
+  color: var(--text-accent);
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--background-modifier-border);
+  animation: fade-in 0.2s ease;
+  text-align: center;
+  min-width: 200px;
+  white-space: nowrap;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.systemsculpt-janitor-modal {
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px !important;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.systemsculpt-janitor-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 8px;
+}
+
+.systemsculpt-janitor-section {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.systemsculpt-section-header {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-normal);
+  margin-bottom: 8px;
+}
+
+.systemsculpt-section-description {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.systemsculpt-janitor-section .systemsculpt-button {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: var(--background-modifier-hover);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  color: var(--text-normal);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.systemsculpt-janitor-section .systemsculpt-button.mod-warning {
+  background-color: var(--background-modifier-error);
+  border-color: var(--background-modifier-error);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-janitor-section .systemsculpt-button.mod-disabled {
+  background-color: var(--background-modifier-border);
+  border-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: default;
+  opacity: 0.7;
+}
+
+.systemsculpt-modal-description {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Simple file tree styles */
+.systemsculpt-file-tree {
+  margin: 8px 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.systemsculpt-file-tree .nav-file {
+  padding-left: 24px;
+  position: relative;
+}
+
+.systemsculpt-file-tree .nav-file-title {
+  color: var(--text-normal);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+}
+
+.systemsculpt-file-tree .nav-file-size {
+  color: var(--text-muted);
+  font-size: 0.85em;
+  margin-left: auto;
+}
+
+/* Modal buttons */
+.systemsculpt-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.systemsculpt-modal-buttons button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.systemsculpt-modal-buttons button.mod-warning {
+  background-color: var(--background-modifier-error);
+  border: 1px solid var(--background-modifier-error);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-left-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.systemsculpt-license-container .setting-item-control {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.systemsculpt-license-container .setting-item-control input {
+  flex: 1;
+}
+.systemsculpt-load-chat-modal {
+  max-width: min(800px, 95vw);
+  max-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px !important;
+}
+
+/* Base Modal */
+.systemsculpt-chat-modal {
+  max-width: min(800px, 95vw);
+  max-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px !important;
+  box-sizing: border-box;
+  margin: 0 auto;
+  align-items: center;
+  background-color: var(--background-primary);
+}
+
+/* Search Bar */
+.systemsculpt-chat-search {
+  width: 100%;
+  position: relative;
+}
+
+.systemsculpt-chat-search input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  font-size: 1em;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-chat-search input:focus {
+  border-color: var(--interactive-accent);
+  outline: none;
+}
+
+/* Chat Grid */
+.systemsculpt-chat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  padding: 4px;
+}
+
+/* Chat Card */
+.systemsculpt-chat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.systemsculpt-chat-card:hover {
+  border-color: var(--interactive-accent);
+  transform: translateY(-1px);
+}
+
+.systemsculpt-chat-card.selected {
+  border-color: var(--interactive-accent);
+}
+
+.systemsculpt-chat-card.systemsculpt-keyboard-selected {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 1px var(--interactive-accent);
+}
+
+.systemsculpt-chat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.systemsculpt-chat-header-left {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Chat Preview */
+.systemsculpt-chat-preview {
+  color: var(--text-muted);
+  font-size: 0.9em;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Meta Information */
+.systemsculpt-chat-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 0.85em;
+  padding-top: 4px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.systemsculpt-chat-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Empty State */
+.systemsculpt-chat-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  color: var(--text-muted);
+  text-align: center;
+  background-color: var(--background-primary-alt);
+  border-radius: 8px;
+  border: 1px dashed var(--background-modifier-border);
+}
+
+/* Search Highlight */
+.systemsculpt-chat-highlight {
+  color: var(--text-accent);
+  font-weight: 500;
+  background-color: var(--text-accent-hover);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Badges */
+.systemsculpt-chat-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+}
+
+/* Loading State */
+.systemsculpt-chat-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 20px;
+}
+
+/* Scrollbar */
+.systemsculpt-chat-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.systemsculpt-chat-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.systemsculpt-chat-grid::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border);
+  border-radius: 3px;
+}
+
+.systemsculpt-chat-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--background-modifier-border-hover);
+}
+
+.systemsculpt-loading {
+  display: inline;
+  position: relative;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  margin-top: 0.15rem;
+  animation: pulse 1.5s infinite;
+  color: var(--text-accent);
+  font-size: 0.8em;
+  line-height: inherit;
+  vertical-align: baseline;
+  user-select: none;
+}
+.systemsculpt-loading .lucide-loader-2 {
+  animation: spin 1s linear infinite;
+}
+.systemsculpt-loading-animation {
+  font-size: 24px;
+  animation: pulse 1.5s infinite;
+  color: var(--text-accent);
+}
+.systemsculpt-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+.systemsculpt-loading-text {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.systemsculpt-markdown-wrapper {
+  line-height: 1.5;
+}
+.systemsculpt-markdown-wrapper li {
+  margin: 0.5em 0;
+}
+.systemsculpt-markdown-wrapper p {
+  margin: 1em 0;
+}
+.systemsculpt-markdown-wrapper p:first-child {
+  margin-top: 0;
+}
+.systemsculpt-markdown-wrapper p:last-child {
+  margin-bottom: 0;
+}
+.systemsculpt-markdown-wrapper pre {
+  margin: 1em 0;
+}
+.systemsculpt-markdown-wrapper ul {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.systemsculpt-message {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem;
+  border-radius: 16px;
+}
+.systemsculpt-message-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+.systemsculpt-message-button-toolbar {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: fit-content;
+  min-width: min-content;
+  display: flex;
+  gap: 0.25rem;
+  padding: 4px;
+  margin-top: 8px;
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(calc(100% + 4px));
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  visibility: hidden;
+  z-index: 100;
+}
+.systemsculpt-message-button.danger:hover {
+  color: white;
+  background-color: var(--background-modifier-error);
+}
+.systemsculpt-message-button:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+.systemsculpt-message-content {
+  color: var(--text-normal);
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  user-select: text;
+  -webkit-user-select: text;
+}
+.systemsculpt-message-content > * {
+  clear: both;
+  display: block;
+}
+.systemsculpt-message-content a {
+  color: var(--text-accent);
+  text-decoration: none;
+}
+.systemsculpt-message-content a:hover {
+  text-decoration: underline;
+}
+.systemsculpt-message-content blockquote {
+  margin: 0.75em 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid var(--interactive-accent);
+  background-color: var(--background-primary);
+  border-radius: 0 4px 4px 0;
+  display: block;
+  width: 100%;
+}
+.systemsculpt-message-content code {
+  user-select: text;
+  -webkit-user-select: text;
+}
+.systemsculpt-message-content h6 {
+  margin: 1em 0 0.5em;
+  line-height: 1.3;
+  display: block;
+  width: 100%;
+}
+.systemsculpt-message-content li {
+  margin: 0.25em 0;
+}
+.systemsculpt-message-content li > ol {
+  margin: 0.25em 0;
+}
+.systemsculpt-message-content ol {
+  margin: 0.75em 0;
+  padding-left: 2em;
+}
+.systemsculpt-message-content p {
+  margin: 0.5em 0;
+  display: block;
+  width: 100%;
+}
+.systemsculpt-message-content p:first-child {
+  margin-top: 0;
+}
+.systemsculpt-message-content p:last-child {
+  margin-bottom: 0;
+}
+.systemsculpt-message-content pre {
+  margin: 0;
+  padding: 2em 1em 1em;
+  background-color: var(--background-primary);
+  border-radius: 8px;
+  overflow-x: auto;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.systemsculpt-message-content pre[class*="language-"]::before {
+  content: attr(class);
+  position: absolute;
+  top: 0.5em;
+  left: 1em;
+  font-size: 0.8em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+.systemsculpt-message-content::after {
+  pointer-events: none;
+}
+.systemsculpt-message-edit-button {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  opacity: 0;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.systemsculpt-message-edit-button:hover {
+  color: var(--text-normal);
+  background: var(--background-modifier-hover);
+}
+.systemsculpt-message-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  max-height: 70vh;
+  object-fit: contain;
+  padding: 16px;
+}
+.systemsculpt-message-label {
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+.systemsculpt-message::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -40px;
+  pointer-events: none;
+}
+.systemsculpt-message:active .systemsculpt-message-button-toolbar,
+.systemsculpt-message:focus-within .systemsculpt-message-button-toolbar,
+.systemsculpt-message:hover .systemsculpt-message-button-toolbar {
+  opacity: 1;
+  visibility: visible;
+}
+.systemsculpt-message:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -40px;
+  height: 40px;
+  z-index: 99;
+}
+.systemsculpt-messages-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0.75rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.systemsculpt-message-button.confirming {
+  width: auto;
+  min-width: 20px;
+  padding: 4px 8px;
+  transition: all 0.15s ease;
+}
+.systemsculpt-message-button.confirming span {
+  font-size: 0.9em;
+  display: inline-block;
+  vertical-align: middle;
+}
+.systemsculpt-message-button.danger.confirming {
+  color: white;
+  background-color: var(--background-modifier-error);
+}
+.systemsculpt-message-button.danger.confirming:hover {
+  color: white;
+  background-color: var(--background-modifier-error);
+}
+
+.systemsculpt-message-button.success.confirming {
+  color: white;
+  background-color: var(--interactive-accent);
+}
+.systemsculpt-message-button.success.confirming:hover {
+  background-color: var(--interactive-accent-hover);
+}
+
+.systemsculpt-message-button.success {
+  color: white;
+  background-color: var(--background-modifier-success);
+}
+
+/* Assistant message specific styles */
+.systemsculpt-assistant-message {
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  background-color: var(--background-secondary);
+  border-radius: 16px 16px 16px 4px;
+}
+.systemsculpt-assistant-message .systemsculpt-message-button-toolbar {
+  justify-content: flex-start;
+}
+.systemsculpt-assistant-message .systemsculpt-message-content {
+  color: var(--text-normal);
+}
+.systemsculpt-assistant-message .systemsculpt-message-label {
+  color: var(--text-accent);
+}
+
+/* User message specific styles */
+.systemsculpt-user-message {
+  align-self: flex-end;
+  background-color: var(--interactive-accent);
+  border-radius: 16px 16px 16px 16px;
+}
+.systemsculpt-user-message .systemsculpt-message-button-toolbar {
+  left: auto;
+  right: 8px;
+}
+.systemsculpt-user-message .systemsculpt-message-content {
+  color: var(--text-on-accent);
+}
+.systemsculpt-user-message .systemsculpt-message-label {
+  color: var(--text-on-accent);
+  opacity: 1;
+  font-weight: 500;
+}
+
+.systemsculpt-modal {
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.systemsculpt-textarea-modal {
+  max-width: 800px;
+  width: 90vw;
+}
+
+.systemsculpt-modal-title {
+  padding: 16px 20px;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: 600;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.systemsculpt-modal-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.systemsculpt-message-container {
+  padding: 8px 0;
+}
+
+.systemsculpt-message-text {
+  font-size: 1.1em;
+  line-height: 1.5;
+  color: var(--text-normal);
+  white-space: pre-wrap;
+}
+
+.systemsculpt-textarea-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.systemsculpt-preset-button-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.systemsculpt-preset-button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--background-modifier-hover);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+}
+
+.systemsculpt-preset-button:hover {
+  background-color: var(--interactive-hover);
+}
+
+.systemsculpt-preset-button.active {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
+
+.systemsculpt-custom-section {
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.systemsculpt-custom-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.systemsculpt-custom-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-custom-input:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-custom-input::placeholder {
+  color: var(--text-muted);
+}
+
+.systemsculpt-textarea {
+  width: 100%;
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+  transition: all 0.2s ease;
+  overflow-y: auto;
+}
+
+.systemsculpt-textarea:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.systemsculpt-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--background-modifier-hover);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+}
+
+.systemsculpt-button:hover {
+  background-color: var(--interactive-hover);
+}
+
+.systemsculpt-button.mod-cta {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
+
+.systemsculpt-button.mod-cta:hover {
+  background-color: var(--interactive-accent-hover);
+}
+
+.systemsculpt-text-modification-modal {
+  width: 80vw;
+  height: 80vh;
+  max-width: 1200px;
+  max-height: 800px;
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-modal-content {
+  display: flex;
+  gap: 20px;
+  height: calc(100% - 120px); /* Account for header and footer */
+  padding: 20px;
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-input-section,
+.systemsculpt-text-modification-modal .systemsculpt-preview-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.systemsculpt-text-modification-modal label {
+  font-weight: 600;
+  color: var(--text-normal);
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-textarea {
+  flex-grow: 1;
+  resize: none;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-text);
+  line-height: 1.5;
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-preview-content {
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  overflow-y: auto;
+  white-space: pre-wrap;
+  font-family: var(--font-text);
+  line-height: 1.5;
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: var(--background-modifier-border);
+  color: var(--text-normal);
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-button:hover {
+  background-color: var(--background-modifier-border-hover);
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-button.mod-cta {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-button.mod-cta:hover {
+  background-color: var(--interactive-accent-hover);
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.systemsculpt-text-modification-modal .systemsculpt-button.loading svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* System Prompt Creation Modal Specific Styles */
+.systemsculpt-prompt-creation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.systemsculpt-prompt-creation-title-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-prompt-creation-title-input:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-prompt-creation-content {
+  width: 100%;
+  min-height: 200px;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: var(--font-text);
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-prompt-creation-content:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-prompt-creation-content::placeholder,
+.systemsculpt-prompt-creation-title-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Audio Transcription Modal */
+.systemsculpt-audio-transcription-modal {
+  max-width: 500px;
+  min-width: 400px;
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-modal-content {
+  padding: var(--size-4-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-2);
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  margin: var(--size-4-2) 0;
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-progress-bar {
+  height: 100%;
+  background: var(--interactive-accent);
+  border-radius: var(--radius-s);
+  transition: width 0.3s ease;
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-progress-status {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  padding: var(--size-4-1) 0;
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-progress-status-content {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4-2);
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-progress-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-accent);
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-progress-status-text {
+  color: var(--text-muted);
+}
+
+.systemsculpt-audio-transcription-modal .systemsculpt-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-4-2);
+  padding: var(--size-4-2);
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+/* System Prompt Modal Loading State */
+.systemsculpt-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.systemsculpt-content-container {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.systemsculpt-content-container.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Generic Modal Styles */
+.systemsculpt-modal {
+  max-width: 600px;
+  max-height: 80vh;
+  border-radius: var(--radius-l);
+  padding: var(--size-4-4);
+  background-color: var(--background-primary);
+  box-shadow: var(--shadow-l);
+}
+
+.systemsculpt-sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4-4);
+}
+
+.systemsculpt-section-header {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--size-4-2) 0;
+  margin: 0 var(--size-4-2);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* Modal Buttons */
+.systemsculpt-modal-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-4-2);
+  margin-top: var(--size-4-4);
+}
+
+.systemsculpt-modal-button-container button {
+  padding: var(--size-4-1) var(--size-4-3);
+  border-radius: var(--radius-s);
+  font-size: var(--font-ui-small);
+  font-weight: var(--font-medium);
+  transition: all 0.15s ease-in-out;
+}
+
+.systemsculpt-modal-button-container button.mod-cta {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-modal-button-container button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.systemsculpt-modal-button-container button:not(.mod-cta) {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Modal Content */
+.systemsculpt-modal-content {
+  margin: var(--size-4-2) 0;
+  padding: 0;
+}
+
+.systemsculpt-modal-title,
+h2.systemsculpt-modal-title {
+  color: var(--interactive-accent);
+  margin: 0;
+  margin-bottom: var(--size-4-2);
+  font-size: var(--font-ui-medium);
+  font-weight: var(--font-medium);
+  line-height: var(--line-height-tight);
+}
+
+.systemsculpt-model-grid {
+  display: block;
+  width: 100%;
+}
+
+.systemsculpt-model-section-label {
+  display: block;
+  text-align: center;
+  padding: var(--size-4-1) 0;
+  margin: var(--size-4-2) 0;
+  font-size: var(--font-ui-small);
+  color: var(--text-muted);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+0% {
+  opacity: 0.3;
+  transform: scale(0.8);
+}
+100% {
+  opacity: 0.3;
+  transform: scale(0.8);
+}
+50% {
+  opacity: 1;
+  transform: scale(1.2);
+}
+from {
+  opacity: 0;
+  transform: rotate(0deg);
+}
+to {
+  opacity: 1;
+  transform: rotate(360deg);
+}
+
+/* Modal Structure */
+.systemsculpt-model-selection-modal {
+  height: min(85vh, 900px);
+  width: clamp(300px, 95%, 1200px);
+  padding: clamp(8px, 2vw, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.5vw, 16px);
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 8px;
+  background: var(--background-primary);
+  box-shadow: var(--shadow-l);
+}
+
+/* Search Container */
+.systemsculpt-search-container {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: min(800px, 95%);
+  margin: 16px auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+/* Common styles for both input and button */
+.systemsculpt-search-input,
+.systemsculpt-providers-button {
+  box-sizing: border-box !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 4px;
+  background-color: var(--background-secondary-alt) !important;
+  border: 1px solid var(--background-modifier-border);
+  font-size: 13px;
+  color: var(--text-normal);
+  line-height: 30px !important;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-search-input {
+  flex: 1;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.systemsculpt-providers-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  min-width: 105px;
+  cursor: pointer;
+  margin: 0;
+  vertical-align: top;
+}
+
+.systemsculpt-providers-button svg {
+  width: 13px;
+  height: 13px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .systemsculpt-search-container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .systemsculpt-providers-button {
+    padding: 0 8px;
+    min-width: 40px;
+    width: 40px;
+  }
+
+  .systemsculpt-providers-button span:last-child {
+    display: none;
+  }
+}
+
+/* Model Grid */
+.systemsculpt-model-grid {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: clamp(8px, 1.5vw, 12px);
+  overflow-y: auto;
+  padding: 0 4px 8px 0;
+  width: 100%;
+  min-height: 0;
+  margin: 0 auto;
+  max-width: 100%;
+  align-items: start;
+  align-content: start;
+}
+
+/* Model Cards */
+.systemsculpt-model-card {
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: clamp(8px, 1.5vw, 12px);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  height: fit-content;
+  min-height: clamp(120px, 20vh, 160px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
+}
+
+/* Provider Headers */
+.systemsculpt-provider-header {
+  grid-column: 1 / -1;
+  padding: 12px 16px 8px;
+  margin: 8px 0 4px;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--text-normal);
+  border-bottom: 1px solid var(--background-modifier-border);
+  display: flex;
+  align-items: center;
+}
+
+/* Favorites section styling */
+.systemsculpt-provider-header:first-of-type {
+  margin-top: 0;
+}
+
+.systemsculpt-provider-header:first-of-type span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.systemsculpt-provider-header:first-of-type span::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-yellow);
+  mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>');
+  -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>');
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* Custom model cards */
+.systemsculpt-custom-model-card {
+  min-height: unset;
+  height: auto;
+  padding: 6px 32px 6px 12px;
+  gap: 0;
+  display: flex;
+  align-items: center;
+}
+
+.systemsculpt-custom-model-name-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.systemsculpt-custom-model-name {
+  font-size: 0.95em;
+  color: var(--text-normal);
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+/* Adjust favorite button position for custom cards */
+.systemsculpt-custom-model-card .systemsculpt-favorite-button {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 4px;
+  width: 20px;
+  height: 20px;
+}
+
+.systemsculpt-model-card:hover {
+  border-color: var(--interactive-accent);
+}
+
+.systemsculpt-selected-model {
+  border-color: var(--interactive-accent);
+  background-color: var(--background-primary-alt);
+}
+
+/* Model Card Content */
+.systemsculpt-model-name-container {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  padding: 1px 0;
+}
+
+.systemsculpt-model-name {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--text-normal);
+  line-height: 1;
+}
+
+.systemsculpt-model-description {
+  font-size: 0.9em;
+  color: var(--text-muted);
+  margin: 0;
+  padding: 1px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.15;
+}
+
+.systemsculpt-model-description.has-tooltip {
+  cursor: help;
+}
+
+/* Model Icons and Indicators */
+.systemsculpt-model-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+
+.systemsculpt-model-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  line-height: 1;
+}
+
+.systemsculpt-model-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* Pricing Colors */
+.systemsculpt-pricing-low {
+  color: var(--color-green);
+  transition: opacity 0.2s ease;
+}
+
+.systemsculpt-pricing-medium {
+  color: var(--color-orange);
+  transition: opacity 0.2s ease;
+}
+
+.systemsculpt-pricing-high {
+  color: var(--color-red);
+  transition: opacity 0.2s ease;
+}
+
+.systemsculpt-pricing-low:hover,
+.systemsculpt-pricing-medium:hover,
+.systemsculpt-pricing-high:hover {
+  opacity: 0.8;
+}
+
+/* Feature Indicators */
+.systemsculpt-speed-indicator {
+  color: var(--color-yellow);
+}
+.systemsculpt-vision-indicator {
+  color: var(--color-blue);
+}
+.systemsculpt-reasoning-indicator {
+  color: var(--color-purple);
+}
+.systemsculpt-creative-indicator {
+  color: var(--color-cyan);
+}
+
+/* Model Details */
+.systemsculpt-model-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+  padding-top: 2px;
+}
+
+.systemsculpt-model-detail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9em;
+}
+
+.systemsculpt-detail-label {
+  color: var(--text-muted);
+}
+
+.systemsculpt-detail-value {
+  color: var(--text-normal);
+}
+
+/* Utility Classes */
+.systemsculpt-model-highlight {
+  background-color: var(--text-highlight-bg);
+  color: var(--text-normal);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.systemsculpt-error-message {
+  color: var(--text-error);
+  padding: 16px;
+  text-align: center;
+  background-color: var(--background-modifier-error);
+  border-radius: 4px;
+}
+
+/* Favorite Button */
+.systemsculpt-favorite-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: var(--background-primary);
+  border-radius: 4px;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-favorite-button:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--color-yellow);
+}
+
+.systemsculpt-favorite-button.is-favorite {
+  color: var(--color-yellow);
+}
+
+.systemsculpt-favorite-button.is-favorite:hover {
+  opacity: 0.8;
+}
+
+.systemsculpt-model-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.systemsculpt-top-pick-badge {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-weight: 600;
+}
+
+.systemsculpt-top-pick-badge svg {
+  display: none;
+}
+
+.systemsculpt-model-card {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+.systemsculpt-model-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+.systemsculpt-model-card.selected {
+  border-color: var(--interactive-accent);
+}
+.systemsculpt-model-card.systemsculpt-keyboard-selected {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--interactive-accent);
+}
+.systemsculpt-model-card:hover {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.systemsculpt-model-description {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.systemsculpt-model-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 32px;
+  grid-column: 1 / -1;
+}
+.systemsculpt-model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  overflow-y: scroll;
+  padding-right: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.systemsculpt-model-highlight {
+  background: none;
+  color: var(--text-accent);
+  padding: 0;
+  border-radius: 0;
+  font-weight: 600;
+  text-decoration: underline;
+  margin: 0;
+}
+.systemsculpt-model-indicator {
+  padding: 8px 12px;
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  color: var(--text-normal);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 35px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.systemsculpt-model-indicator span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.systemsculpt-model-indicator:hover {
+  background-color: var(--background-modifier-hover);
+  border-color: var(--interactive-accent);
+}
+.systemsculpt-model-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.systemsculpt-model-info svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-accent);
+}
+.systemsculpt-model-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.systemsculpt-model-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-normal);
+}
+.systemsculpt-model-search {
+  width: 100%;
+  box-sizing: border-box;
+}
+.systemsculpt-model-search input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.systemsculpt-model-selection-modal {
+  max-width: min(800px, 95vw);
+  max-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px !important;
+  box-sizing: border-box;
+  margin: 0 auto;
+  align-items: center;
+}
+.systemsculpt-filters-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+.systemsculpt-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.systemsculpt-sort-select {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 13px;
+  cursor: pointer;
+}
+.systemsculpt-sort-select:hover {
+  border-color: var(--interactive-accent);
+}
+.systemsculpt-sort-select:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+}
+.systemsculpt-model-name-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.systemsculpt-notice {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 150ms ease-in-out;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+}
+
+.systemsculpt-notice-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.systemsculpt-notice-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.systemsculpt-notice-message {
+  flex: 1;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Notice Types */
+.systemsculpt-notice.systemsculpt-notice-error {
+  background-color: var(--background-modifier-error);
+  border-color: var(--background-modifier-error);
+  color: var(--text-error);
+}
+
+.systemsculpt-notice.systemsculpt-notice-success {
+  background-color: var(--background-modifier-success);
+  border-color: var(--background-modifier-success);
+  color: var(--text-success);
+}
+
+.systemsculpt-notice.systemsculpt-notice-warning {
+  background-color: var(--background-modifier-warning);
+  border-color: var(--background-modifier-warning);
+  color: var(--text-warning);
+}
+
+.systemsculpt-notice.systemsculpt-notice-info {
+  background-color: var(--background-modifier-info);
+  border-color: var(--background-modifier-info);
+  color: var(--text-info);
+}
+
+/* Fade animation */
+.systemsculpt-notice.fade {
+  opacity: 0.9;
+}
+
+.systemsculpt-popup {
+  background-color: var(--background-primary);
+  padding: 16px;
+  border-radius: 4px;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.systemsculpt-popup-button {
+  width: 100%;
+  padding: 8px 16px;
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.systemsculpt-popup-button-primary {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border: none;
+}
+.systemsculpt-popup-button-primary:hover {
+  background-color: var(--interactive-accent-hover);
+}
+.systemsculpt-popup-button-secondary {
+  background-color: transparent;
+  border: 1px solid var(--interactive-accent);
+  color: var(--interactive-accent);
+}
+.systemsculpt-popup-button-secondary:hover {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+.systemsculpt-popup-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.systemsculpt-popup-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  padding: 16px;
+}
+.systemsculpt-popup-content {
+  margin-bottom: 16px;
+}
+.systemsculpt-popup-large {
+  min-width: 400px;
+  max-width: 600px;
+}
+.systemsculpt-popup-textarea {
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: var(--font-text-size);
+  line-height: 1.5;
+  color: var(--text-normal);
+  resize: vertical;
+  width: 100%;
+  min-height: 180px;
+  transition: all 0.15s ease-in-out;
+  font-family: var(--font-text);
+  margin: 12px 0;
+  box-shadow: var(--input-shadow);
+}
+.systemsculpt-popup-textarea::placeholder {
+  color: var(--text-faint);
+  opacity: 0.8;
+}
+.systemsculpt-popup-textarea:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  background: var(--background-primary);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-preview-audio {
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 8px;
+  background: var(--background-secondary);
+}
+.systemsculpt-preview-container {
+  position: fixed;
+  z-index: 1000;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  max-width: min(800px, 80vw);
+  max-height: min(600px, 80vh);
+  overflow: hidden;
+}
+.systemsculpt-preview-error {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 32px;
+  min-height: 200px;
+}
+.systemsculpt-preview-frontmatter {
+  background: var(--background-secondary);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+.systemsculpt-preview-frontmatter-grid {
+  display: grid;
+  gap: 4px;
+}
+.systemsculpt-preview-frontmatter-key {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.systemsculpt-preview-frontmatter-row {
+  display: grid;
+  grid-template-columns: minmax(100px, auto) 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 4px 0;
+}
+.systemsculpt-preview-frontmatter-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.systemsculpt-preview-frontmatter-value {
+  font-size: 13px;
+  color: var(--text-normal);
+  word-break: break-word;
+}
+.systemsculpt-preview-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  max-height: 70vh;
+  padding: 16px;
+}
+.systemsculpt-preview-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 16px;
+  min-height: 200px;
+  position: absolute;
+  inset: 0;
+  background: var(--background-primary);
+  z-index: 1;
+}
+.systemsculpt-preview-loading svg {
+  width: 32px;
+  height: 32px;
+  animation: spin 1s linear infinite;
+}
+.systemsculpt-preview-loading::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--background-modifier-border);
+  border-top-color: var(--text-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+.systemsculpt-preview-markdown {
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-normal);
+  overflow-wrap: break-word;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+.systemsculpt-preview-markdown h3:first-child {
+  margin-top: 0;
+}
+.systemsculpt-preview-markdown img {
+  max-width: 100%;
+  height: auto;
+}
+.systemsculpt-preview-pane {
+  flex: 1;
+  min-width: 0;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.systemsculpt-preview-pdf {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.systemsculpt-preview-pdf-container {
+  width: 100%;
+  height: 70vh;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.systemsculpt-preview-separator {
+  height: 1px;
+  background: var(--background-modifier-border);
+  margin: 16px 0;
+}
+.systemsculpt-preview-text {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  overflow-y: auto;
+  margin: 0;
+}
+.systemsculpt-preview-video {
+  width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+  background: var(--background-secondary);
+}
+
+.systemsculpt-pro-promotion {
+  margin: 12px 0;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.systemsculpt-pro-promotion .setting-item {
+  padding: 0;
+  border: none;
+}
+
+.systemsculpt-pro-promotion .setting-item-heading {
+  margin-bottom: 8px;
+}
+
+.pro-benefits-list {
+  margin: 8px 0;
+  padding-left: 16px;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.pro-benefits-list li {
+  margin: 2px 0;
+  list-style-type: "→";
+  padding-left: 8px;
+  text-indent: -12px;
+  flex: 1 1 calc(50% - 16px);
+  min-width: 200px;
+}
+
+.systemsculpt-pro-promotion .setting-item-control {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.systemsculpt-pro-promotion button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.systemsculpt-pro-promotion .feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  font-size: 13px;
+}
+.systemsculpt-pro-promotion .features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.systemsculpt-pro-promotion .pro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.systemsculpt-pro-promotion .pro-header .pricing {
+  font-weight: 600;
+  color: var(--text-accent);
+}
+.systemsculpt-pro-promotion .pro-header .pricing-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: right;
+}
+.systemsculpt-pro-promotion .pro-header h3 {
+  margin: 0;
+  color: var(--text-accent);
+}
+
+.systemsculpt-recorder-modal {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  width: 240px;
+  height: fit-content;
+  cursor: move;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  will-change: top, left;
+  touch-action: none;
+}
+
+.systemsculpt-recorder-modal.recording {
+  touch-action: none;
+}
+
+.systemsculpt-recorder-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 120px;
+  background: var(--background-primary);
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .systemsculpt-recorder-modal {
+    width: calc(100% - 40px);
+    max-width: 240px;
+    bottom: 80px;
+    right: 20px;
+    padding: 10px;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+  }
+
+  .systemsculpt-recorder-content {
+    min-height: 100px;
+  }
+}
+
+.systemsculpt-recorder-modal.dragging {
+  opacity: 0.9;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.systemsculpt-recorder-live {
+  font-size: 12px;
+  color: #5871ef;
+  margin-bottom: 4px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.systemsculpt-recorder-modal.recording .systemsculpt-recorder-live {
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
+.systemsculpt-recorder-canvas {
+  width: 100%;
+  height: 80px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 768px) {
+  .systemsculpt-recorder-canvas {
+    height: 60px;
+    margin: 0;
+    border: 1px solid var(--background-modifier-border);
+  }
+}
+
+.systemsculpt-recorder-error {
+  color: var(--text-error);
+  text-align: center;
+  padding: 8px;
+  font-size: 14px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.systemsculpt-recorder-status {
+  font-size: 12px;
+  text-align: center;
+  padding: 4px 8px;
+  margin-top: 4px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.systemsculpt-recorder-status:not([style*="display: none"]) {
+  opacity: 1;
+}
+
+.systemsculpt-recorder-status.error {
+  color: var(--text-error);
+  background: var(--background-modifier-error);
+}
+
+.systemsculpt-result-badge {
+  font-size: 0.8em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+}
+.systemsculpt-result-context {
+  flex: 1;
+  margin-right: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.systemsculpt-result-description {
+  color: var(--text-muted);
+  font-size: 0.9em;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.systemsculpt-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+.systemsculpt-result-info {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.systemsculpt-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.systemsculpt-result-item.is-selected {
+  background-color: var(--background-modifier-hover);
+}
+.systemsculpt-result-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-direction: column;
+  gap: 8px;
+  max-width: 100%;
+  overflow: hidden;
+}
+.systemsculpt-result-path {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.systemsculpt-result-size {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--background-modifier-border);
+  font-size: 11px;
+}
+.systemsculpt-result-title {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-normal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.systemsculpt-results-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  min-width: 300px;
+  overflow: hidden;
+}
+
+.systemsculpt-scroll-bottom-button {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--background-secondary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  z-index: 100;
+}
+.systemsculpt-scroll-bottom-button:hover {
+  opacity: 1;
+  background-color: var(--background-secondary-alt);
+}
+.systemsculpt-scroll-container {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 8px;
+}
+
+.systemsculpt-search-container {
+  position: relative;
+  top: 0;
+  z-index: 1;
+  background-color: var(--background-primary);
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.systemsculpt-filters-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.systemsculpt-search-highlight {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.systemsculpt-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  font-size: 16px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.systemsculpt-search-input:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-search-modal {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem !important;
+  border-radius: 0;
+}
+
+.systemsculpt-search-result {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: var(--background-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.systemsculpt-search-result .systemsculpt-result-context,
+.systemsculpt-search-result .systemsculpt-result-description,
+.systemsculpt-search-result .systemsculpt-result-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.systemsculpt-search-result.systemsculpt-selected {
+  background-color: var(--background-modifier-hover);
+  transform: translateY(-1px);
+}
+
+.systemsculpt-search-results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.systemsculpt-split-container {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.systemsculpt-stream-container {
+  display: inline;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.systemsculpt-stream-container > * {
+  display: inline;
+}
+.systemsculpt-stream-container p {
+  display: inline;
+  margin: 0;
+}
+
+.systemsculpt-text-wrapper {
+  position: relative;
+}
+
+.theme-dark .systemsculpt-context-card.is-selected {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.theme-dark .systemsculpt-context-card.is-selected:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Container for toggle with label */
+.systemsculpt-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9em;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.systemsculpt-token-counter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.systemsculpt-has-tooltip {
+  cursor: help;
+}
+
+.systemsculpt-validation-time {
+  font-size: 0.9em;
+  color: var(--text-muted);
+}
+
+.systemsculpt-version-indicator {
+  margin: 12px 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--background-secondary);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.systemsculpt-version-indicator p {
+  margin: 4px 0;
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
