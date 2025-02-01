@@ -26,4 +26,5 @@ jobs:
           tag: ${{ env.RELEASE_VERSION }}
           name: Release ${{ env.RELEASE_VERSION }}
           body: "Automatically created release for push on the main branch."
-          assets: main.js,manifest.json,styles.css,versions.json
+          artifacts: main.js,manifest.json,styles.css,versions.json
+          token: ${{ secrets.GITHUB_TOKEN }}
