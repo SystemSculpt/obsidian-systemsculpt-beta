@@ -15,12 +15,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set release version
+      - name: Set release version and get commit message
         id: get_version
         run: |
           RELEASE_VERSION=$(jq -r .version manifest.json)
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           echo "Version: $RELEASE_VERSION"
+          echo "Commit Message: $COMMIT_MESSAGE"
 
       - name: Create Release
         id: create_release
@@ -28,6 +33,6 @@ jobs:
         with:
           tag: ${{ env.RELEASE_VERSION }}
           name: Release ${{ env.RELEASE_VERSION }}
-          body: "Automatically created release for push on the main branch."
+          body: ${{ env.COMMIT_MESSAGE }}
           artifacts: main.js,manifest.json,styles.css,versions.json
           token: ${{ secrets.GITHUB_TOKEN }}
