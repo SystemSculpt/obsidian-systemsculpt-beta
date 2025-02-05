@@ -1721,6 +1721,370 @@ to {
   overflow: hidden;
 }
 
+/* ============================================================
+   Inline Diff Editor – Native Obsidian Look & Real-time Updates
+   ============================================================ */
+
+/* Container for each diff widget (old/new with actions) */
+.diff-widget-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: 1px 0;
+  width: fit-content;
+}
+
+/* New text (insertions/replacements) – green highlight */
+.diff-new-text {
+  color: var(--text-normal);
+  background: rgba(0, 128, 0, 0.15);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  white-space: pre-wrap;
+  display: block;
+}
+
+/* Old text (deletions/replaced text) – red strikethrough */
+.diff-old-text {
+  color: var(--text-muted);
+  background: rgba(255, 0, 0, 0.15);
+  padding: 0 4px;
+  border-radius: 3px;
+  text-decoration: line-through;
+  white-space: pre-wrap;
+}
+
+/* Hide original text that's being replaced */
+.diff-hidden-text {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  color: transparent !important;
+  caret-color: transparent !important;
+  background: none !important;
+  text-shadow: none !important;
+  border: none;
+  outline: none;
+}
+
+.diff-hidden-text::selection {
+  background: transparent !important;
+}
+
+/* Container for the action buttons within a diff widget */
+.diff-actions {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(calc(100% + 8px));
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  visibility: hidden;
+  z-index: 100;
+}
+
+/* Base button styling for diff actions */
+.diff-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* Hover state */
+.diff-btn:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Accept (check) and reject (×) buttons with distinct colors */
+.diff-accept {
+  color: var(--text-accent);
+}
+.diff-reject {
+  color: var(--text-error);
+}
+
+/* Processing indicator shown while waiting for streaming AI suggestions */
+.diff-processing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  margin: 4px 0;
+  font-size: 0.9em;
+  color: var(--text-muted);
+}
+
+/* Optional spinner icon animation */
+.diff-processing .spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--background-modifier-border);
+  border-top-color: var(--text-muted);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal (edit instructions) – refined styling for clarity */
+.systemsculpt-edit-instructions-modal {
+  background-color: var(--background-primary);
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  animation: popup-slide-up 0.2s ease-out;
+}
+
+.systemsculpt-edit-instructions-modal .modal-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: var(--text-normal);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.systemsculpt-edit-instructions-modal .modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.systemsculpt-edit-instructions-modal .modal-description {
+  color: var(--text-muted);
+  font-size: 0.9em;
+  margin-bottom: 16px;
+}
+
+.systemsculpt-edit-instructions-modal textarea {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: var(--font-text-size);
+  color: var(--text-normal);
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: var(--font-text);
+  margin: 12px 0;
+}
+
+.systemsculpt-edit-instructions-modal textarea::placeholder {
+  color: var(--text-faint);
+  opacity: 0.8;
+}
+
+.systemsculpt-edit-instructions-modal textarea:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
+}
+
+.systemsculpt-edit-instructions-modal .modal-button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.systemsculpt-edit-instructions-modal .modal-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+}
+
+.systemsculpt-edit-instructions-modal .modal-button-secondary {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.systemsculpt-edit-instructions-modal .modal-button-secondary:hover {
+  background-color: var(--background-modifier-border);
+  transform: translateY(-1px);
+}
+
+.systemsculpt-edit-instructions-modal .modal-button-primary {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.systemsculpt-edit-instructions-modal .modal-button-primary:hover {
+  background-color: var(--interactive-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Dark theme adjustments */
+.theme-dark .systemsculpt-edit-instructions-modal {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Show toolbar on container hover */
+.diff-widget-container:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -40px;
+  height: 40px;
+  z-index: 99;
+}
+
+.diff-widget-container:hover .diff-actions,
+.diff-widget-container:focus-within .diff-actions,
+.diff-widget-container:active .diff-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Bottom toolbar for Accept/Reject All actions */
+.diff-bottom-toolbar {
+  position: absolute;
+  top: 83.33%; /* 5/6ths from the top */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  background-color: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.diff-bottom-toolbar.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.diff-bottom-toolbar .diff-btn {
+  padding: 4px 12px;
+  width: auto;
+  height: 28px;
+  gap: 6px;
+  font-size: 0.9em;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.diff-bottom-toolbar .diff-btn:hover {
+  background-color: var(--background-modifier-hover);
+  transform: translateY(-1px);
+}
+
+.diff-bottom-toolbar .diff-btn span {
+  margin-left: 4px;
+}
+
+/* Dark theme adjustments */
+.theme-dark .diff-bottom-toolbar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Git-style Unified Diff Styling */
+.unified-diff-chunk {
+  font-family: var(--font-monospace);
+  white-space: pre;
+  margin: 2px 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  width: fit-content;
+}
+
+.diff-lines {
+  margin-bottom: 0;
+}
+
+.diff-line {
+  line-height: 1.2;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.diff-line.diff-old {
+  color: var(--text-error);
+  background-color: rgba(215, 58, 73, 0.1);
+}
+
+.diff-line.diff-new {
+  color: var(--text-accent);
+  background-color: rgba(40, 167, 69, 0.1);
+}
+
+.unified-diff-chunk .diff-actions {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 4px 0;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.unified-diff-chunk .diff-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
 .systemsculpt-input-container {
   display: flex;
   flex-direction: row;
