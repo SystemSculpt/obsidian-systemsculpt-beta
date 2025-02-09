@@ -53,22 +53,149 @@ to {
   position: relative;
 }
 .systemsculpt-chat-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 8px;
   background-color: var(--background-secondary);
   border-bottom: 1px solid var(--background-modifier-border);
+  padding: 8px;
 }
-.systemsculpt-chat-header-bottom {
-  grid-column: 1 / -1;
-}
-.systemsculpt-chat-header-top {
+.systemsculpt-chat-header-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  grid-column: 1 / -1;
+  gap: 12px;
+  min-height: 32px;
+  width: 100%;
 }
+.systemsculpt-header-section-left,
+.systemsculpt-header-section-right {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Drawer styles */
+.systemsculpt-drawer {
+  width: 100%;
+  position: relative;
+}
+
+.systemsculpt-drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.systemsculpt-drawer-header:hover {
+  border-color: var(--interactive-accent);
+  background-color: var(--background-primary-alt);
+}
+
+.systemsculpt-drawer-title {
+  flex: 1;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--text-normal);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.systemsculpt-drawer-content {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 8px;
+  z-index: 100;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+/* File item styles */
+.systemsculpt-file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background-color: var(--background-primary-alt);
+  margin-bottom: 4px;
+  min-width: 0; /* Enable text truncation */
+}
+
+.systemsculpt-file-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.systemsculpt-file-meta {
+  display: none; /* Hide by default */
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.systemsculpt-file-remove {
+  margin-left: auto;
+  opacity: 0.7;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+.systemsculpt-file-remove:hover {
+  opacity: 1;
+}
+
+/* Only show meta info when there's enough space */
+@media (min-width: 600px) {
+  .systemsculpt-file-meta {
+    display: inline;
+  }
+}
+
+/* Model indicator styles when in drawer */
+.systemsculpt-model-indicator-drawer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: var(--text-normal);
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.systemsculpt-model-indicator-drawer:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.systemsculpt-model-indicator-drawer.systemsculpt-no-model {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.systemsculpt-drawer-separator {
+  height: 1px;
+  background-color: var(--background-modifier-border);
+  margin: 4px 0;
+  opacity: 0.6;
+}
+
 .systemsculpt-chat-input {
   flex-grow: 1;
   resize: none;
@@ -358,19 +485,23 @@ to {
   gap: 8px;
   margin-top: auto;
   min-width: 0;
+  flex-wrap: nowrap;
 }
 .systemsculpt-context-type-group {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 4px;
   flex-shrink: 0;
 }
 .systemsculpt-context-meta-group {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 4px;
   margin-left: auto;
   height: 24px;
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
 }
 .systemsculpt-context-type,
 .systemsculpt-context-size,
@@ -383,16 +514,26 @@ to {
   color: var(--text-muted);
   padding: 0 6px;
   border-radius: 4px;
+  white-space: nowrap;
 }
 .systemsculpt-context-type {
   background: var(--background-modifier-border);
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 .systemsculpt-context-size {
   padding: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .systemsculpt-context-token-count {
   background: var(--background-modifier-border);
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .systemsculpt-card-content {
   display: flex;
@@ -571,6 +712,27 @@ to {
   gap: 8px;
   margin-bottom: 16px;
   padding: 0 4px;
+}
+
+@media (max-width: 600px) {
+  .systemsculpt-context-meta {
+    flex-wrap: nowrap;
+  }
+  
+  .systemsculpt-context-meta-group {
+    display: none;
+  }
+  
+  .systemsculpt-context-type {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .systemsculpt-context-type-group,
+  .systemsculpt-context-meta-group {
+    display: flex;
+  }
 }
 
 .systemsculpt-credit-balance {
@@ -1288,16 +1450,17 @@ to {
 .systemsculpt-drawer-item {
   display: flex;
   align-items: center;
-  padding: 6px 8px;
+  justify-content: space-between;
+  padding: 8px 10px;
   border-radius: 6px;
   cursor: pointer;
   color: var(--text-normal);
-  transition: background-color 0.15s ease;
+  transition: all 0.15s ease;
   font-size: 13px;
-  gap: 8px;
   background: var(--background-primary);
   margin-bottom: 5px;
   min-height: 32px;
+  gap: 8px;
 }
 .systemsculpt-drawer-item-danger {
   color: var(--text-error);
@@ -1313,12 +1476,14 @@ to {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .systemsculpt-drawer-item-path a {
   color: var(--text-normal);
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 .systemsculpt-drawer-item-path a:hover {
   color: var(--text-accent);
@@ -1336,11 +1501,12 @@ to {
   border-radius: 4px;
   width: 24px;
   height: 24px;
-  opacity: 1;
+  flex-shrink: 0;
+  opacity: 0.7;
   transition: all 0.2s ease;
 }
 .systemsculpt-drawer-item:hover .systemsculpt-drawer-item-remove {
-  // opacity: 1;  <-- Remove this line
+  opacity: 1;
 }
 .systemsculpt-drawer-item-remove:hover {
   color: var(--text-error);
@@ -1402,6 +1568,126 @@ to {
     transform: rotate(360deg);
   }
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .systemsculpt-drawer.is-mobile {
+    /* Adjust header for better touch targets */
+    .systemsculpt-drawer-header {
+      padding: 12px 16px;
+      min-height: 48px;
+    }
+
+    /* Adjust content positioning for mobile */
+    .systemsculpt-drawer-content {
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 60vh;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.15);
+      padding: 16px;
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    /* Active state for content */
+    .systemsculpt-drawer-content[style*="opacity: 1"] {
+      transform: translateY(0);
+    }
+
+    /* Adjust item styles for touch */
+    .systemsculpt-drawer-item {
+      padding: 12px;
+      min-height: 44px;
+      margin-bottom: 8px;
+    }
+
+    /* Make remove buttons more touch-friendly */
+    .systemsculpt-drawer-item-remove {
+      width: 32px;
+      height: 32px;
+      opacity: 1;
+    }
+
+    /* Add pull indicator for bottom sheet */
+    .systemsculpt-drawer-content::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 4px;
+      background: var(--background-modifier-border);
+      border-radius: 2px;
+    }
+
+    /* Ensure text is readable */
+    .systemsculpt-drawer-title {
+      font-size: 16px;
+    }
+
+    .systemsculpt-drawer-count {
+      font-size: 14px;
+      padding: 2px 8px;
+    }
+  }
+}
+
+/* Prevent body scroll when drawer is open on mobile */
+body.drawer-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Context meta information */
+.systemsculpt-context-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding-left: 8px;
+}
+
+.systemsculpt-context-type,
+.systemsculpt-context-size,
+.systemsculpt-context-token-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 0 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.systemsculpt-context-type {
+  background: var(--background-modifier-border);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.systemsculpt-context-size {
+  padding: 0;
+  min-width: 45px;
+  text-align: right;
+}
+
+.systemsculpt-context-token-count {
+  background: var(--background-modifier-border);
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Remove old media queries since we're handling responsiveness in JS */
 
 .systemsculpt-empty-state {
   display: none;
@@ -1721,373 +2007,10 @@ to {
   overflow: hidden;
 }
 
-/* ============================================================
-   Inline Diff Editor – Native Obsidian Look & Real-time Updates
-   ============================================================ */
-
-/* Container for each diff widget (old/new with actions) */
-.diff-widget-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: var(--background-secondary);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 4px;
-  padding: 2px 4px;
-  margin: 1px 0;
-  width: fit-content;
-}
-
-/* New text (insertions/replacements) – green highlight */
-.diff-new-text {
-  color: var(--text-normal);
-  background: rgba(0, 128, 0, 0.15);
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-weight: 500;
-  white-space: pre-wrap;
-  display: block;
-}
-
-/* Old text (deletions/replaced text) – red strikethrough */
-.diff-old-text {
-  color: var(--text-muted);
-  background: rgba(255, 0, 0, 0.15);
-  padding: 0 4px;
-  border-radius: 3px;
-  text-decoration: line-through;
-  white-space: pre-wrap;
-}
-
-/* Hide original text that's being replaced */
-.diff-hidden-text {
-  opacity: 0;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-select: none;
-  color: transparent !important;
-  caret-color: transparent !important;
-  background: none !important;
-  text-shadow: none !important;
-  border: none;
-  outline: none;
-}
-
-.diff-hidden-text::selection {
-  background: transparent !important;
-}
-
-/* Container for the action buttons within a diff widget */
-.diff-actions {
-  position: absolute;
-  bottom: 0;
-  left: 8px;
-  display: flex;
-  gap: 4px;
-  padding: 4px;
-  background-color: var(--background-modifier-form-field);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 4px;
-  opacity: 0;
-  transform: translateY(calc(100% + 8px));
-  transition: all 0.15s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  visibility: hidden;
-  z-index: 100;
-}
-
-/* Base button styling for diff actions */
-.diff-btn {
-  background: none;
-  border: none;
-  padding: 4px;
-  border-radius: 4px;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-}
-
-/* Hover state */
-.diff-btn:hover {
-  background-color: var(--background-modifier-hover);
-  color: var(--text-normal);
-}
-
-/* Accept (check) and reject (×) buttons with distinct colors */
-.diff-accept {
-  color: var(--text-accent);
-}
-.diff-reject {
-  color: var(--text-error);
-}
-
-/* Processing indicator shown while waiting for streaming AI suggestions */
-.diff-processing {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  background: var(--background-secondary);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 4px;
-  margin: 4px 0;
-  font-size: 0.9em;
-  color: var(--text-muted);
-}
-
-/* Optional spinner icon animation */
-.diff-processing .spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--background-modifier-border);
-  border-top-color: var(--text-muted);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Modal (edit instructions) – refined styling for clarity */
-.systemsculpt-edit-instructions-modal {
-  background-color: var(--background-primary);
-  padding: 24px;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-  animation: popup-slide-up 0.2s ease-out;
-}
-
-.systemsculpt-edit-instructions-modal .modal-title {
-  font-size: 1.2em;
-  font-weight: 600;
-  color: var(--text-normal);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.systemsculpt-edit-instructions-modal .modal-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.systemsculpt-edit-instructions-modal .modal-description {
-  color: var(--text-muted);
-  font-size: 0.9em;
-  margin-bottom: 16px;
-}
-
-.systemsculpt-edit-instructions-modal textarea {
-  background: var(--background-secondary);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 6px;
-  padding: 12px;
-  font-size: var(--font-text-size);
-  color: var(--text-normal);
-  width: 100%;
-  min-height: 180px;
-  resize: vertical;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  font-family: var(--font-text);
-  margin: 12px 0;
-}
-
-.systemsculpt-edit-instructions-modal textarea::placeholder {
-  color: var(--text-faint);
-  opacity: 0.8;
-}
-
-.systemsculpt-edit-instructions-modal textarea:focus {
-  outline: none;
-  border-color: var(--interactive-accent);
-  box-shadow: 0 0 0 2px var(--background-modifier-border-hover);
-}
-
-.systemsculpt-edit-instructions-modal .modal-button-container {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.systemsculpt-edit-instructions-modal .modal-button {
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  min-width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-}
-
-.systemsculpt-edit-instructions-modal .modal-button-secondary {
-  background-color: var(--background-modifier-hover);
-  color: var(--text-normal);
-}
-
-.systemsculpt-edit-instructions-modal .modal-button-secondary:hover {
-  background-color: var(--background-modifier-border);
-  transform: translateY(-1px);
-}
-
-.systemsculpt-edit-instructions-modal .modal-button-primary {
-  background-color: var(--interactive-accent);
-  color: var(--text-on-accent);
-}
-
-.systemsculpt-edit-instructions-modal .modal-button-primary:hover {
-  background-color: var(--interactive-accent-hover);
-  transform: translateY(-1px);
-}
-
-/* Dark theme adjustments */
-.theme-dark .systemsculpt-edit-instructions-modal {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-}
-
-/* Show toolbar on container hover */
-.diff-widget-container:hover::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -40px;
-  height: 40px;
-  z-index: 99;
-}
-
-.diff-widget-container:hover .diff-actions,
-.diff-widget-container:focus-within .diff-actions,
-.diff-widget-container:active .diff-actions {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Bottom toolbar for Accept/Reject All actions */
-.diff-bottom-toolbar {
-  position: absolute;
-  top: 83.33%; /* 5/6ths from the top */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  gap: 8px;
-  padding: 6px;
-  background-color: var(--background-modifier-form-field);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.diff-bottom-toolbar.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-.diff-bottom-toolbar .diff-btn {
-  padding: 4px 12px;
-  width: auto;
-  height: 28px;
-  gap: 6px;
-  font-size: 0.9em;
-  background-color: var(--background-primary);
-  border: 1px solid var(--background-modifier-border);
-}
-
-.diff-bottom-toolbar .diff-btn:hover {
-  background-color: var(--background-modifier-hover);
-  transform: translateY(-1px);
-}
-
-.diff-bottom-toolbar .diff-btn span {
-  margin-left: 4px;
-}
-
-/* Dark theme adjustments */
-.theme-dark .diff-bottom-toolbar {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Git-style Unified Diff Styling */
-.unified-diff-chunk {
-  font-family: var(--font-monospace);
-  white-space: pre;
-  margin: 2px 0;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: var(--background-secondary);
-  border: 1px solid var(--background-modifier-border);
-  width: fit-content;
-}
-
-.diff-lines {
-  margin-bottom: 0;
-}
-
-.diff-line {
-  line-height: 1.2;
-  padding: 0 4px;
-  border-radius: 2px;
-  font-size: 0.9em;
-  margin: 0;
-}
-
-.diff-line.diff-old {
-  color: var(--text-error);
-  background-color: rgba(215, 58, 73, 0.1);
-}
-
-.diff-line.diff-new {
-  color: var(--text-accent);
-  background-color: rgba(40, 167, 69, 0.1);
-}
-
-.unified-diff-chunk .diff-actions {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 4px 0;
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  background: none;
-  border: none;
-  box-shadow: none;
-}
-
-.unified-diff-chunk .diff-btn {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--background-modifier-border);
-  background: var(--background-primary);
-}
 
 .systemsculpt-input-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 8px;
   padding: 8px;
   background-color: var(--background-primary);
@@ -2096,11 +2019,12 @@ to {
 }
 
 .systemsculpt-button-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(40px, 1fr));
-  grid-template-rows: repeat(2, minmax(40px, 1fr));
-  gap: 4px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
   height: fit-content;
+  padding: 0 4px;
+  margin-bottom: 4px;
 }
 
 .systemsculpt-input-action-button {
@@ -2108,14 +2032,14 @@ to {
   align-items: center;
   justify-content: center;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--background-modifier-border);
   background-color: var(--background-primary-alt);
   color: var(--text-normal);
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 }
 
 .systemsculpt-input-action-button:hover {
@@ -2151,7 +2075,7 @@ to {
   resize: none;
   min-height: 40px;
   max-height: 150px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   margin: 0;
   border-radius: 8px;
   border: 1px solid var(--background-modifier-border);
@@ -2159,6 +2083,7 @@ to {
   font-size: 15px;
   line-height: 1.5;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .systemsculpt-chat-input:focus {
@@ -2294,26 +2219,6 @@ to {
   background-color: var(--background-modifier-border);
   transform: none;
   box-shadow: none;
-}
-
-.systemsculpt-token-counter {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  font-size: 12px;
-  color: var(--text-muted);
-  padding: 4px 10px;
-  opacity: 0.8;
-  z-index: 10;
-  transition: all 0.2s ease;
-  border-radius: 4px;
-}
-
-.systemsculpt-token-counter.warning {
-  color: var(--text-error);
-  font-weight: 500;
-  background-color: var(--background-modifier-error);
-  opacity: 1;
 }
 
 /* Drag and drop styles */
