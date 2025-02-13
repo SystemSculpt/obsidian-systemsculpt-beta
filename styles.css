@@ -2474,6 +2474,10 @@ body.drawer-open {
   border: 1px solid var(--background-modifier-border);
   cursor: pointer;
   transition: all 0.15s ease;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  position: relative; /* For favorite button positioning */
 }
 
 .systemsculpt-chat-card:hover {
@@ -2566,15 +2570,25 @@ body.drawer-open {
   color: var(--text-muted);
 }
 
-/* Loading State */
-.systemsculpt-chat-loading {
+/* Virtual Scrolling */
+.systemsculpt-chat-sentinel {
+  height: 1px;
+  width: 100%;
+  opacity: 0;
+}
+
+.systemsculpt-chat-sections-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  font-size: 14px;
-  color: var(--text-muted);
-  padding: 20px;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Optimize Performance */
+.systemsculpt-chat-card {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Scrollbar */
@@ -2593,6 +2607,88 @@ body.drawer-open {
 
 .systemsculpt-chat-grid::-webkit-scrollbar-thumb:hover {
   background: var(--background-modifier-border-hover);
+}
+
+/* Loading Overlay */
+.systemsculpt-progress-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--background-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.systemsculpt-progress-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+
+.systemsculpt-progress-status-icon {
+  animation: spin 1s linear infinite;
+  color: var(--interactive-accent);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Favorite Button */
+.systemsculpt-favorite-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: var(--background-primary);
+  border-radius: 4px;
+  z-index: 2;
+  transition: all 0.2s ease;
+  opacity: 0.5;
+}
+
+.systemsculpt-chat-card:hover .systemsculpt-favorite-button {
+  opacity: 1;
+}
+
+.systemsculpt-favorite-button:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--color-yellow);
+}
+
+.systemsculpt-favorite-button.is-favorite {
+  color: var(--color-yellow);
+  opacity: 1;
+}
+
+.systemsculpt-favorite-button.is-favorite:hover {
+  opacity: 0.8;
+}
+
+/* Section Headers */
+.systemsculpt-provider-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px 8px;
+  margin: 8px 0 4px;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--text-normal);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.systemsculpt-provider-header:first-of-type {
+  margin-top: 0;
 }
 
 .systemsculpt-loading {
@@ -4987,6 +5083,49 @@ to {
   margin: 0;
 }
 
+.systemsculpt-tasks-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--background-primary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 0.9em;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  margin: 0;
+  backdrop-filter: blur(10px);
+}
+
+.systemsculpt-tasks-toggle input[type="checkbox"] {
+  margin: 0;
+}
+
+.systemsculpt-tasks-toggle label {
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hide completed tasks in all views */
+.hide-completed-tasks [data-task="x"],
+.hide-completed-tasks .is-checked,
+.hide-completed-tasks .task-list-item[data-task="x"],
+.hide-completed-tasks li[data-task="x"],
+.hide-completed-tasks .markdown-source-view .cm-line:has(.cm-formatting-task.cm-property) {
+  display: none !important;
+}
+
+/* Ensure proper spacing */
+.markdown-source-view .cm-editor {
+  padding-top: 0 !important;
+}
+
+.markdown-source-view .cm-scroller,
+.markdown-reading-view .markdown-preview-view {
+  padding-top: 8px;
+} 
 .systemsculpt-text-wrapper {
   position: relative;
 }
