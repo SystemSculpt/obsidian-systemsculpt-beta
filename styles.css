@@ -42,7 +42,6 @@ to {
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
-  padding: 0.25rem;
 }
 
 .systemsculpt-chat-container {
@@ -58,17 +57,13 @@ to {
   padding: 8px;
 }
 .systemsculpt-chat-header-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  min-height: 32px;
+  display: flex;
   width: 100%;
 }
-.systemsculpt-header-section-left,
-.systemsculpt-header-section-right {
+.systemsculpt-header-section-left {
   position: relative;
   min-width: 0;
-  max-width: 100%;
+  flex: 1;
 }
 
 /* Drawer styles */
@@ -5179,5 +5174,19 @@ to {
   opacity: 1;
   transform: translateY(0);
   transition: all 0.3s ease;
+}
+
+/* Button group dividers */
+.systemsculpt-button-group-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--background-modifier-border);
+  margin: 0 4px;
+  opacity: 0.5;
+}
+
+/* Disabled state should affect dividers too */
+.systemsculpt-input-container.disabled .systemsculpt-button-group-divider {
+  opacity: 0.2;
 }
 
